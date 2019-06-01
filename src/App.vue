@@ -42,8 +42,6 @@ firebase.auth().onAuthStateChanged((user)=>{
 
 let user = firebase.auth().currentUser;
 
-console.log(user.uid);
-
 export default {
   name: 'app',
   components: {
@@ -60,7 +58,6 @@ export default {
       console.log("Submitting");
       let data = {
         email: this.email,
-        userId: user.uid
       }
 
       console.log(data);
