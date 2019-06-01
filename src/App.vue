@@ -33,11 +33,16 @@ import db from './firebaseInit.js'
 
 console.log(firebase.auth());
 
-firebase.auth().onAuthStateChanged((user)=>{
-  console.log(user.email);
-  console.log(user.uid);
 
+
+firebase.auth().onAuthStateChanged((user)=>{
+  // console.log(user.email);
+  // console.log(user.uid);
 });
+
+let user = firebase.auth().currentUser;
+
+console.log(user.uid);
 
 export default {
   name: 'app',
@@ -55,8 +60,10 @@ export default {
       console.log("Submitting");
       let data = {
         email: this.email,
-        userId: "temporaryId-564as21cz"
+        userId: user.uid
       }
+
+      console.log(data);
 
       axios.post('https://test-991e4.firebaseio.com/vuefire.json', data)
         .then( (response) =>{
