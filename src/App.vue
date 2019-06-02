@@ -13,6 +13,8 @@
       <button v-on:click.prevent="create">Create Account</button>
 
       <button v-on:click.prevent="logout">Logout</button>
+
+      
     </form>
 
 
@@ -22,6 +24,7 @@
       <input type="text" id="email" v-model="email">
     <!-- https://vuejs.org/v2/guide/events.html: REF: Prevent default events -->
       <button v-on:click.prevent="submit">Submit</button>
+      <button v-on:click.prevent="deleteCollection">Delete</button>
     </form>
   </div>
 </template>
@@ -29,18 +32,12 @@
 <script>
 import firebase from 'firebase'
 import axios from 'axios'
-import db from './firebaseInit.js'
-
-console.log(firebase.auth());
+import './firebaseInit.js'
 
 
+const db = firebase.firestore();
 
-firebase.auth().onAuthStateChanged((user)=>{
-  // console.log(user.email);
-  // console.log(user.uid);
-});
-
-let user = firebase.auth().currentUser;
+deleteCollection(db, "sample", 10);
 
 export default {
   name: 'app',
@@ -55,20 +52,24 @@ export default {
   },
   methods: {
     submit(){
-      console.log("Submitting");
+
       let data = {
         email: this.email,
       }
 
-      console.log(data);
+      let setDoc = db.collection('cities').doc('LA').set(data);
 
-      axios.post('https://test-991e4.firebaseio.com/vuefire.json', data)
-        .then( (response) =>{
-          console.log(response);
-        })
-        .catch( (error) =>{
-          console.log(error);
-        });
+      db.collection("cities").add({
+          first: "Ada",
+          last: "Lovelace",
+          born: 1815
+      })
+      .then(function(docRef) {
+          console.log("Document written with ID: ", docRef.id);
+      })
+      .catch(function(error) {
+          console.error("Error adding document: ", error);
+      });
     
     },
     login(){
