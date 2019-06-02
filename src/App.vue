@@ -24,7 +24,6 @@
       <input type="text" id="email" v-model="email">
     <!-- https://vuejs.org/v2/guide/events.html: REF: Prevent default events -->
       <button v-on:click.prevent="submit">Submit</button>
-      <button v-on:click.prevent="deleteCollection">Delete</button>
     </form>
   </div>
 </template>
@@ -36,8 +35,6 @@ import './firebaseInit.js'
 
 
 const db = firebase.firestore();
-
-deleteCollection(db, "sample", 10);
 
 export default {
   name: 'app',
